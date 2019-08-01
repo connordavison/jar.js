@@ -1,20 +1,20 @@
 /**
- * @template Transaction
+ * @template T
  */
 class RouteNotFoundError extends Error {
     /**
-     * @param {Transaction} transaction
+     * @param {T} dispatchable
      */
-    constructor(transaction) {
-        super('Transaction did not match a route');
-        this.transaction = transaction;
+    constructor(dispatchable) {
+        super('Dispatchable did not match a route');
+        this.dispatchable = dispatchable;
     }
 
     /**
-     * @returns {Transaction}
+     * @returns {T}
      */
-    getTransaction() {
-        return this.transaction;
+    getDispatchable() {
+        return this.dispatchable;
     }
 }
 

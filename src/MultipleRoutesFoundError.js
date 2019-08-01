@@ -1,26 +1,26 @@
 /**
- * @template Transaction, Route
+ * @template T
  */
 class MultipleRoutesFoundError extends Error {
     /**
-     * @param {Transaction} transaction
-     * @param {Route[]} routes
+     * @param {T} dispatchedMessage
+     * @param {Route<T>[]} routes
      */
-    constructor(transaction, routes) {
-        super('Transaction matched multiple routes')
-        this.transaction = transaction;
+    constructor(dispatchedMessage, routes) {
+        super('Dispatched message matched multiple routes')
+        this.dispatchedMessage = dispatchedMessage;
         this.routes = routes;
     }
 
     /**
-     * @returns {Transaction}
+     * @returns {T}
      */
-    getTransaction() {
-        return this.transaction;
+    getDispatchedMessage() {
+        return this.dispatchedMessage;
     }
 
     /**
-     * @returns {Route[]}
+     * @returns {Route<T>[]}
      */
     getRoutes() {
         return this.routes;

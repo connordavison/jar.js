@@ -1,14 +1,24 @@
-declare interface ActionInterface<Transaction> {
-    submit(transaction: Transaction): void;
+declare interface RouteInterface<T> {
+    dispatch(message: T): any;
 }
 
-declare type Action<Transaction> = ActionInterface<Transaction>
-    | ((Transaction) => void);
+declare type Route<T> = RouteInterface<T> | ((message: T) => any);
 
-declare interface RouteMatcherInterface<Route, Transaction> {
-    match(route: Route, transaction: Transaction): boolean;
+declare interface MessageRouteMatcherInterface<T> {
+    match(message: T, route: Route<T>): boolean;
 }
 
-declare interface RouteCollectionInterface<Route, Transaction> {
-    match(transaction: Transaction): Route;
+declare interface RouteRepositoryInterface<T> {
+    find(message: T): Route<T>;
+    findAll(message: T): Route<T>[];
+}
+
+declare type Middleware<T> = Route<T>;
+
+declare type Dispatchable<T> = Route<T> | Middleware<T>;
+
+declare interface DispatcherInterface<T> {
+    dispatch(message: T, dispatchable: Dispatchable<T>): Promise;
+    multidispatch(message: T, dispatchables: Dispatchable<T>[]): Promise;
+    multidispatchSync(message: T, dispatchables: Dispatchable<T>[]): Promise;
 }

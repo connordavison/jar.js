@@ -1,6 +1,10 @@
 module.exports = {
+    Dispatcher: require('./src/Dispatcher'),
+    InvalidRouteError: require('./src/InvalidRouteError'),
+    MiddlewareRoute: require('./src/MiddlewareRoute'),
+    MulticastRouter: require('./src/MulticastRouter'),
     MultipleRoutesFoundError: require('./src/MultipleRoutesFoundError'),
-    RouteCollection: require('./src/RouteCollection'),
     RouteNotFoundError: require('./src/RouteNotFoundError'),
-    Router: require('./src/Router'),
+    RouteRepository: require('./src/RouteRepository'),
+    UnicastRouter: require('./src/UnicastRouter'),
 };
