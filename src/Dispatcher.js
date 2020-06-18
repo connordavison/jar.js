@@ -1,4 +1,4 @@
-const InvalidDispatchableError = require('./InvalidRouteError');
+const InvalidDispatchableError = require('./InvalidDispatchableError');
 
 /**
  * @implements {DispatcherInterface<T>}
@@ -29,7 +29,7 @@ class Dispatcher {
      */
     async multidispatch(message, dispatchables) {
         const promises = dispatchables.map(
-            route => this.dispatch(message, route)
+            dispatchable => this.dispatch(message, dispatchable)
         );
 
         return Promise.all(promises);
@@ -43,8 +43,10 @@ class Dispatcher {
     async multidispatchSync(message, dispatchables) {
         const responses = [];
 
-        for (const route of dispatchables) {
-            responses.push(await this.dispatch(message, route));
+        for (const dispatchable of dispatchables) {
+            responses.push(
+                await this.dispatch(message, dispatchable)
+            );
         }
 
         return responses;

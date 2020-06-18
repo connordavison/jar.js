@@ -1,5 +1,5 @@
-# JAR
+# Router
 
-[![Build Status](https://travis-ci.org/connordavison/jar.js.svg?branch=master)](https://travis-ci.org/connordavison/jar.js)
+[![Build Status](https://travis-ci.org/connordavison/router.js.svg?branch=master)](https://travis-ci.org/connordavison/router.js)
 
 A protocol-agnostic routing framework.

@@ -1,5 +1,3 @@
-// @ts-nocheck
-const defer = require('defer-promise');
 const expect = require('chai').expect;
 
 const Dispatcher = require('../src/Dispatcher');
@@ -9,6 +7,8 @@ describe('Dispatcher', () => {
     const theMessage = {};
     let promiseFoo;
     let promiseBar;
+    let resolveFoo;
+    let resolveBar;
     let dispatchableFoo;
     let dispatchableBar;
     let calls;
@@ -16,14 +16,14 @@ describe('Dispatcher', () => {
     beforeEach(() => {
         calls = [];
 
-        promiseFoo = defer();
-        promiseBar = defer();
+        promiseFoo = new Promise(resolve => resolveFoo = resolve);
+        promiseBar = new Promise(resolve => resolveBar = resolve);
 
         dispatchableFoo = async message => {
             expect(message).to.equal(theMessage);
 
             calls.push('foo.before');
-            await promiseFoo.promise;
+            await promiseFoo;
             calls.push('foo.after');
 
             return 'foo';
@@ -32,33 +32,34 @@ describe('Dispatcher', () => {
             expect(message).to.equal(theMessage);
 
             calls.push('bar.before');
-            await promiseBar.promise;
+            await promiseBar;
             calls.push('bar.after');
 
             return 'bar';
         };
     });
 
-    describe('#dispatch', () => {
+    describe('#multidispatch', () => {
         it('should invoke routes asynchronously', async () => {
             const dispatch = dispatcher.multidispatch(theMessage, [
                 dispatchableFoo,
                 dispatchableBar,
             ]);
 
-            // Resolving deferred promises in reverse order
-            promiseBar.resolve();
-            promiseFoo.resolve();
+            expect(calls).to.have.ordered.members(['foo.before', 'bar.before']);
+
+            resolveFoo();
+            resolveBar();
 
             expect(await dispatch).to.have.ordered.members([
                 'foo',
                 'bar',
             ]);
 
-            expect(calls).to.have.ordered.members([
+            expect(calls).to.have.members([
                 'foo.before',
-                'bar.before',
                 'foo.after',
+                'bar.before',
                 'bar.after',
             ]);
         });
@@ -72,8 +73,8 @@ describe('Dispatcher', () => {
             ]);
 
             // Resolving deferred promises in reverse order
-            promiseBar.resolve();
-            promiseFoo.resolve();
+            resolveBar();
+            resolveFoo();
 
             expect(await dispatch).to.have.ordered.members([
                 'foo',

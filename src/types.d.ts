@@ -18,7 +18,7 @@ declare type Middleware<T> = Route<T>;
 declare type Dispatchable<T> = Route<T> | Middleware<T>;
 
 declare interface DispatcherInterface<T> {
-    dispatch(message: T, dispatchable: Dispatchable<T>): Promise;
-    multidispatch(message: T, dispatchables: Dispatchable<T>[]): Promise;
-    multidispatchSync(message: T, dispatchables: Dispatchable<T>[]): Promise;
+    dispatch(message: T, dispatchable: Dispatchable<T>);
+    multidispatch(message: T, dispatchables: Dispatchable<T>[]);
+    multidispatchSync(message: T, dispatchables: Dispatchable<T>[]);
 }

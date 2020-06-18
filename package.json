@@ -1,6 +1,7 @@
 {
-    "name": "@cdavison/jar",
-    "version": "0.3.0",
+    "name": "@cdavison/router",
+    "author": "C. Davison <connorpdavison@gmail.com>",
+    "version": "0.4.0",
     "description": "A protocol-agnostic router framework.",
     "main": "index.js",
     "scripts": {
@@ -10,11 +11,9 @@
         "router",
         "protocol-agnostic"
     ],
-    "author": "C. Davison <connorpdavison@gmail.com>)",
     "license": "ISC",
     "devDependencies": {
         "chai": "^4.2.0",
-        "defer-promise": "^2.0.1",
         "mocha": "^6.1.4",
         "sinon": "^7.3.2"
     }
